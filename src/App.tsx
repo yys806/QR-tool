@@ -36,19 +36,40 @@ const App = () => {
   });
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
   const matrix = useQRMatrix(text, errorLevel);
 
   useEffect(() => {
+    if (page !== "home") {
+      return;
+    }
+
+    const container = previewRef.current;
+    if (!container) {
+      return;
+    }
+
     const updateSize = () => {
+      const width = container.getBoundingClientRect().width;
+      if (!width) {
+        return;
+      }
       const maxSize = 620;
-      const safeWidth = Math.max(320, window.innerWidth - 80);
-      setCanvasSize(Math.min(maxSize, safeWidth));
+      const minSize = 260;
+      setCanvasSize(Math.max(minSize, Math.min(maxSize, width)));
     };
 
     updateSize();
+
+    if ("ResizeObserver" in window) {
+      const observer = new ResizeObserver(() => updateSize());
+      observer.observe(container);
+      return () => observer.disconnect();
+    }
+
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     const resolvePage = () => {
@@ -113,7 +134,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen text-slate-900">
-      <header className="mx-auto w-full max-w-[1200px] px-6 pt-6">
+      <header className="mx-auto w-full max-w-full px-6 pt-6 lg:max-w-[67vw]">
         <div className="grid items-center gap-4 md:grid-cols-3">
           <nav className="flex items-center gap-1 justify-self-start rounded-full border border-white/70 bg-white/70 p-1 text-sm shadow-sm">
           <button
@@ -156,7 +177,7 @@ const App = () => {
       </header>
 
       {page === "home" ? (
-        <div className="mx-auto flex max-w-[1200px] flex-col gap-6 px-6 pb-10 pt-6 lg:flex-row">
+        <div className="mx-auto flex max-w-full flex-col gap-6 px-6 pb-10 pt-6 lg:max-w-[67vw] lg:flex-row">
           <aside className="w-full lg:max-w-[360px]">
             <Controls
               text={text}
@@ -207,7 +228,7 @@ const App = () => {
                 </div>
               </div>
 
-              <div className="mt-6 flex items-center justify-center">
+            <div ref={previewRef} className="mt-6 flex items-center justify-center">
                 <QRCanvas
                   matrix={matrix}
                   size={canvasSize}
