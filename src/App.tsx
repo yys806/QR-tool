@@ -206,12 +206,11 @@ const App = () => {
               onEyeShapeChange={setEyeShape}
               logoDataUrl={logoDataUrl}
               onLogoUpload={handleLogoUpload}
-              onLogoClear={() => setLogoDataUrl(null)}
-              logoScale={logoScale}
-              onLogoScaleChange={setLogoScale}
-              onDownload={handleDownload}
-            />
-          </aside>
+            onLogoClear={() => setLogoDataUrl(null)}
+            logoScale={logoScale}
+            onLogoScaleChange={setLogoScale}
+          />
+        </aside>
 
           <main className="flex flex-1 flex-col justify-center">
             <div className="rounded-[32px] border border-white/70 bg-white/60 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.18)] backdrop-blur">
@@ -248,6 +247,16 @@ const App = () => {
                   logoScale={logoScale}
                   canvasRef={canvasRef}
                 />
+              </div>
+
+              <div className="mt-6 flex items-center justify-center">
+                <button
+                  type="button"
+                  onClick={handleDownload}
+                  className="w-full max-w-[360px] rounded-2xl bg-slate-900 px-6 py-4 text-base font-semibold text-white shadow-[0_18px_30px_rgba(15,23,42,0.2)] transition hover:-translate-y-0.5 hover:bg-slate-800"
+                >
+                  下载 PNG
+                </button>
               </div>
             </div>
 

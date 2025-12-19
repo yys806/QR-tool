@@ -28,7 +28,6 @@ type ControlsProps = {
   onLogoClear: () => void;
   logoScale: number;
   onLogoScaleChange: (value: number) => void;
-  onDownload: () => void;
 };
 
 const Controls = ({
@@ -56,8 +55,7 @@ const Controls = ({
   onLogoUpload,
   onLogoClear,
   logoScale,
-  onLogoScaleChange,
-  onDownload
+  onLogoScaleChange
 }: ControlsProps) => {
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -76,7 +74,7 @@ const Controls = ({
         <h1 className="font-display mt-2 text-2xl font-semibold text-slate-900">
           画布二维码生成器
         </h1>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-3 text-base font-medium text-slate-700">
           用自定义形状、渐变和居中 Logo 设计二维码。
         </p>
       </div>
@@ -118,7 +116,7 @@ const Controls = ({
         </div>
       </details>
 
-      <details className="rounded-2xl border border-white/70 bg-white/70 p-4 shadow-sm" open>
+      <details className="rounded-2xl border border-white/70 bg-white/70 p-4 shadow-sm">
         <summary className="cursor-pointer text-sm font-semibold text-slate-800">
           模块
         </summary>
@@ -304,15 +302,6 @@ const Controls = ({
         </div>
       </details>
 
-      <div className="rounded-2xl border border-white/70 bg-white/70 p-4 shadow-sm">
-        <button
-          type="button"
-          onClick={onDownload}
-          className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:-translate-y-0.5 hover:bg-slate-800"
-        >
-          下载 PNG
-        </button>
-      </div>
     </div>
   );
 };
