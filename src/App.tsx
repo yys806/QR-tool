@@ -138,7 +138,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen text-slate-900">
-      <header className="mx-auto w-full max-w-full px-6 pt-6 lg:max-w-[67vw]">
+      <header className="mx-auto w-full max-w-full px-6 pt-6 lg:max-w-[75vw]">
         <div className="grid items-center gap-4 md:grid-cols-3">
           <nav className="flex items-center gap-1 justify-self-start rounded-full border border-white/70 bg-white/70 p-1 text-sm shadow-sm">
           <button
@@ -181,7 +181,7 @@ const App = () => {
       </header>
 
       {page === "home" ? (
-        <div className="mx-auto flex max-w-full flex-col gap-6 px-6 pb-10 pt-6 lg:max-w-[67vw] lg:flex-row">
+        <div className="mx-auto flex max-w-full flex-col gap-6 px-6 pb-10 pt-6 lg:max-w-[75vw] lg:flex-row">
           <aside className="w-full lg:max-w-[360px]">
             <Controls
               text={text}

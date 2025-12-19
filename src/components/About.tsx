@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <div className="mx-auto flex min-h-screen max-w-full flex-col gap-6 px-6 py-10 lg:max-w-[67vw]">
+    <div className="mx-auto flex min-h-screen max-w-full flex-col gap-6 px-6 py-10 lg:max-w-[75vw]">
       <div className="rounded-[32px] border border-white/70 bg-white/70 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.18)] backdrop-blur">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
           关于
