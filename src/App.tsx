@@ -61,7 +61,11 @@ const App = () => {
 
     updateSize();
 
-    if ("ResizeObserver" in window) {
+    const supportsResizeObserver =
+      typeof (window as Window & { ResizeObserver?: typeof ResizeObserver })
+        .ResizeObserver === "function";
+
+    if (supportsResizeObserver) {
       const observer = new ResizeObserver(() => updateSize());
       observer.observe(container);
       return () => observer.disconnect();
