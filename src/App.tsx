@@ -19,6 +19,7 @@ const App = () => {
   const [gradientTo, setGradientTo] = useState("#f97316");
   const [eyeColor, setEyeColor] = useState("#111827");
   const [eyeShape, setEyeShape] = useState<EyeShape>("square");
+  const [titleText, setTitleText] = useState("");
   const [logoDataUrl, setLogoDataUrl] = useState<string | null>(null);
   const [logoScale, setLogoScale] = useState(0.22);
   const [canvasSize, setCanvasSize] = useState(520);
@@ -26,10 +27,10 @@ const App = () => {
     if (typeof window === "undefined") {
       return "home";
     }
-    if (window.location.hash === "#about") {
+    if (window.location.hash.startsWith("#about")) {
       return "about";
     }
-    if (window.location.hash === "#docs") {
+    if (window.location.hash.startsWith("#docs")) {
       return "docs";
     }
     return "home";
@@ -77,10 +78,10 @@ const App = () => {
 
   useEffect(() => {
     const resolvePage = () => {
-      if (window.location.hash === "#about") {
+      if (window.location.hash.startsWith("#about")) {
         return "about";
       }
-      if (window.location.hash === "#docs") {
+      if (window.location.hash.startsWith("#docs")) {
         return "docs";
       }
       return "home";
@@ -129,6 +130,13 @@ const App = () => {
     }
   };
 
+  const handleOpenGuide = () => {
+    setPage("docs");
+    if (typeof window !== "undefined") {
+      window.location.hash = "docs/quick-start";
+    }
+  };
+
   const navButtonClass = (active: boolean) =>
     `rounded-full px-4 py-2 text-sm font-semibold transition ${
       active
@@ -141,31 +149,31 @@ const App = () => {
       <header className="mx-auto w-full max-w-full px-6 pt-6 lg:max-w-[75vw]">
         <div className="grid items-center gap-4 md:grid-cols-3">
           <nav className="flex items-center gap-1 justify-self-start rounded-full border border-white/70 bg-white/70 p-1 text-sm shadow-sm">
-          <button
-            type="button"
-            onClick={() => handleNavigate("home")}
-            className={navButtonClass(page === "home")}
-            aria-current={page === "home" ? "page" : undefined}
-          >
-            主页
-          </button>
-          <button
-            type="button"
-            onClick={() => handleNavigate("about")}
-            className={navButtonClass(page === "about")}
-            aria-current={page === "about" ? "page" : undefined}
-          >
-            关于
-          </button>
-          <button
-            type="button"
-            onClick={() => handleNavigate("docs")}
-            className={navButtonClass(page === "docs")}
-            aria-current={page === "docs" ? "page" : undefined}
-          >
-            文档
-          </button>
-        </nav>
+            <button
+              type="button"
+              onClick={() => handleNavigate("home")}
+              className={navButtonClass(page === "home")}
+              aria-current={page === "home" ? "page" : undefined}
+            >
+              主页
+            </button>
+            <button
+              type="button"
+              onClick={() => handleNavigate("about")}
+              className={navButtonClass(page === "about")}
+              aria-current={page === "about" ? "page" : undefined}
+            >
+              关于
+            </button>
+            <button
+              type="button"
+              onClick={() => handleNavigate("docs")}
+              className={navButtonClass(page === "docs")}
+              aria-current={page === "docs" ? "page" : undefined}
+            >
+              文档
+            </button>
+          </nav>
 
           <div className="flex items-center justify-center gap-3 md:col-start-2">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-lg shadow-slate-900/20">
@@ -186,6 +194,8 @@ const App = () => {
             <Controls
               text={text}
               onTextChange={setText}
+              titleText={titleText}
+              onTitleTextChange={setTitleText}
               errorLevel={errorLevel}
               onErrorLevelChange={setErrorLevel}
               dotStyle={dotStyle}
@@ -206,14 +216,14 @@ const App = () => {
               onEyeShapeChange={setEyeShape}
               logoDataUrl={logoDataUrl}
               onLogoUpload={handleLogoUpload}
-            onLogoClear={() => setLogoDataUrl(null)}
-            logoScale={logoScale}
-            onLogoScaleChange={setLogoScale}
-          />
-        </aside>
+              onLogoClear={() => setLogoDataUrl(null)}
+              logoScale={logoScale}
+              onLogoScaleChange={setLogoScale}
+            />
+          </aside>
 
           <main className="flex flex-1 flex-col justify-center">
-            <div className="rounded-[32px] border border-white/70 bg-white/60 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.18)] backdrop-blur">
+            <div className="mx-auto w-full max-w-[640px] rounded-[32px] border border-white/70 bg-white/60 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.18)] backdrop-blur">
               <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
@@ -226,12 +236,21 @@ const App = () => {
                     请保持对比度并留出边距以保证可扫描性。
                   </p>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-xs text-slate-600">
-                  矩阵尺寸：{matrix.length || "--"} x {matrix.length || "--"}
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-xs text-slate-600">
+                    矩阵尺寸：{matrix.length || "--"} x {matrix.length || "--"}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleOpenGuide}
+                    className="rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900"
+                  >
+                    使用说明
+                  </button>
                 </div>
               </div>
 
-            <div ref={previewRef} className="mt-6 flex items-center justify-center">
+              <div ref={previewRef} className="mt-6 flex items-center justify-center">
                 <QRCanvas
                   matrix={matrix}
                   size={canvasSize}
@@ -243,6 +262,7 @@ const App = () => {
                   dotStyle={dotStyle}
                   eyeColor={eyeColor}
                   eyeShape={eyeShape}
+                  titleText={titleText}
                   logoDataUrl={logoDataUrl}
                   logoScale={logoScale}
                   canvasRef={canvasRef}

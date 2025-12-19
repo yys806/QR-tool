@@ -84,7 +84,15 @@ type DocGroup = {
 const Docs = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("all");
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [activeSlug, setActiveSlug] = useState<string | null>(() => {
+    if (typeof window === "undefined") {
+      return null;
+    }
+    if (window.location.hash.startsWith("#docs/")) {
+      return decodeURIComponent(window.location.hash.replace("#docs/", ""));
+    }
+    return null;
+  });
 
   const filteredDocs = useMemo(() => {
     const keyword = searchTerm.trim().toLowerCase();
@@ -155,6 +163,29 @@ const Docs = () => {
       setActiveSlug(null);
     }
   }, [activeSlug, filteredDocs]);
+
+  useEffect(() => {
+    const syncFromHash = () => {
+      if (!window.location.hash.startsWith("#docs/")) {
+        return;
+      }
+      const slug = decodeURIComponent(window.location.hash.replace("#docs/", ""));
+      if (filteredDocs.some((doc) => doc.slug === slug)) {
+        setActiveSlug(slug);
+      }
+    };
+
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, [filteredDocs]);
+
+  const handleSelectDoc = (slug: string) => {
+    setActiveSlug(slug);
+    if (typeof window !== "undefined") {
+      window.location.hash = `docs/${slug}`;
+    }
+  };
 
   const activeDoc = filteredDocs.find((doc) => doc.slug === activeSlug) ?? null;
 
@@ -230,7 +261,7 @@ const Docs = () => {
                         <button
                           key={doc.slug}
                           type="button"
-                          onClick={() => setActiveSlug(doc.slug)}
+                          onClick={() => handleSelectDoc(doc.slug)}
                           className={`w-full rounded-xl border-b border-dashed border-slate-200 px-3 py-3 text-left text-sm font-semibold transition last:border-b-0 ${
                             activeSlug === doc.slug
                               ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"

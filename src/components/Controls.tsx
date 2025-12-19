@@ -5,6 +5,8 @@ import type { DotStyle, EyeShape } from "./QRCanvas";
 type ControlsProps = {
   text: string;
   onTextChange: (value: string) => void;
+  titleText: string;
+  onTitleTextChange: (value: string) => void;
   errorLevel: ErrorCorrectionLevel;
   onErrorLevelChange: (value: ErrorCorrectionLevel) => void;
   dotStyle: DotStyle;
@@ -33,6 +35,8 @@ type ControlsProps = {
 const Controls = ({
   text,
   onTextChange,
+  titleText,
+  onTitleTextChange,
   errorLevel,
   onErrorLevelChange,
   dotStyle,
@@ -92,6 +96,17 @@ const Controls = ({
               onChange={(event) => onTextChange(event.target.value)}
               className="w-full rounded-xl border border-slate-200 bg-white/80 p-3 text-sm shadow-inner focus:border-slate-400 focus:outline-none"
               placeholder="https://example.com"
+            />
+          </label>
+
+          <label className="flex flex-col gap-2">
+            <span className="font-medium text-slate-800">顶部文字</span>
+            <input
+              type="text"
+              value={titleText}
+              onChange={(event) => onTitleTextChange(event.target.value)}
+              className="w-full rounded-xl border border-slate-200 bg-white/80 p-3 text-sm shadow-inner focus:border-slate-400 focus:outline-none"
+              placeholder="可选：输入二维码标题"
             />
           </label>
 

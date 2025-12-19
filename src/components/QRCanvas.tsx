@@ -14,6 +14,7 @@ type QRCanvasProps = {
   dotStyle: DotStyle;
   eyeColor: string;
   eyeShape: EyeShape;
+  titleText: string;
   logoDataUrl: string | null;
   logoScale: number;
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -95,11 +96,12 @@ const drawLogo = (
   size: number,
   logoImage: HTMLImageElement,
   logoScale: number,
-  backgroundColor: string
+  backgroundColor: string,
+  offsetY: number
 ) => {
   const logoSize = size * logoScale;
   const x = (size - logoSize) / 2;
-  const y = (size - logoSize) / 2;
+  const y = offsetY + (size - logoSize) / 2;
   const padding = logoSize * 0.08;
   const radius = logoSize * 0.12;
 
@@ -127,6 +129,7 @@ const QRCanvas = ({
   dotStyle,
   eyeColor,
   eyeShape,
+  titleText,
   logoDataUrl,
   logoScale,
   canvasRef
@@ -159,28 +162,45 @@ const QRCanvas = ({
       return;
     }
 
+    const title = titleText.trim();
+    const titleFontSize = Math.max(18, Math.round(size * 0.06));
+    const titleTop = title ? Math.round(titleFontSize * 0.5) : 0;
+    const titleSpacing = title ? Math.round(titleFontSize * 0.7) : 0;
+    const qrOffsetY = title ? titleTop + titleFontSize + titleSpacing : 0;
+    const canvasHeight = size + qrOffsetY;
+
     const ratio = window.devicePixelRatio || 1;
     canvas.width = size * ratio;
-    canvas.height = size * ratio;
+    canvas.height = canvasHeight * ratio;
     canvas.style.width = `${size}px`;
-    canvas.style.height = `${size}px`;
+    canvas.style.height = `${canvasHeight}px`;
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    context.clearRect(0, 0, size, size);
+    context.clearRect(0, 0, size, canvasHeight);
     context.imageSmoothingEnabled = true;
 
     context.fillStyle = backgroundColor;
-    context.fillRect(0, 0, size, size);
+    context.fillRect(0, 0, size, canvasHeight);
+
+    if (title) {
+      context.fillStyle = foregroundColor;
+      context.font = `600 ${titleFontSize}px "Space Grotesk", "DM Sans", sans-serif`;
+      context.textAlign = "center";
+      context.textBaseline = "top";
+      context.fillText(title, size / 2, titleTop);
+    }
 
     if (!matrix.length) {
       context.fillStyle = "#64748b";
       context.font = "16px DM Sans, sans-serif";
       context.textAlign = "center";
-      context.fillText("请输入内容以生成二维码。", size / 2, size / 2);
+      context.textBaseline = "middle";
+      context.fillText("请输入内容以生成二维码。", size / 2, qrOffsetY + size / 2);
       return;
     }
 
     const moduleSize = size / (matrix.length + QUIET_ZONE * 2);
     const offset = QUIET_ZONE * moduleSize;
+    const offsetY = qrOffsetY + offset;
     const gradient = gradientEnabled
       ? context.createLinearGradient(0, 0, size, size)
       : null;
@@ -202,7 +222,7 @@ const QRCanvas = ({
         }
 
         const x = offset + col * moduleSize;
-        const y = offset + row * moduleSize;
+        const y = offsetY + row * moduleSize;
 
         if (dotStyle === "square") {
           context.fillRect(x, y, moduleSize, moduleSize);
@@ -259,15 +279,16 @@ const QRCanvas = ({
     }
 
     const eyeOffset = offset;
+    const eyeOffsetY = qrOffsetY + offset;
     const eyePositions = [
-      { x: eyeOffset, y: eyeOffset },
+      { x: eyeOffset, y: eyeOffsetY },
       {
         x: eyeOffset + (matrix.length - EYE_SIZE) * moduleSize,
-        y: eyeOffset
+        y: eyeOffsetY
       },
       {
         x: eyeOffset,
-        y: eyeOffset + (matrix.length - EYE_SIZE) * moduleSize
+        y: eyeOffsetY + (matrix.length - EYE_SIZE) * moduleSize
       }
     ];
 
@@ -284,7 +305,7 @@ const QRCanvas = ({
     );
 
     if (logoImage) {
-      drawLogo(context, size, logoImage, logoScale, backgroundColor);
+      drawLogo(context, size, logoImage, logoScale, backgroundColor, qrOffsetY);
     }
   }, [
     matrix,
@@ -297,6 +318,7 @@ const QRCanvas = ({
     dotStyle,
     eyeColor,
     eyeShape,
+    titleText,
     logoImage,
     logoScale,
     canvasRef
