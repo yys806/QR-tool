@@ -1,21 +1,21 @@
 const contactChannels = [
   {
     title: "邮箱",
-    value: "support@shen806.icu",
+    value: "yaoshen806@qq.com",
     hint: "建议附上用途、尺寸与色彩偏好",
-    href: "mailto:support@shen806.icu"
+    href: "yaoshen806@qq.com"
   },
   {
     title: "微信",
-    value: "shen806",
+    value: "yys08060910",
     hint: "添加请备注：二维码工具",
     href: ""
   },
   {
-    title: "反馈建议",
-    value: "shen.chat",
+    title: "其他文章",
+    value: "blog",
     hint: "提交使用反馈与新功能想法",
-    href: "https://shen.chat"
+    href: "https://yys806.github.io/"
   }
 ];
 
