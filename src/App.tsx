@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import About from "./components/About";
+import Contact from "./components/Contact";
 import Docs from "./components/Docs";
 import Controls from "./components/Controls";
 import QRCanvas, { type DotStyle, type EyeShape } from "./components/QRCanvas";
 import { useQRMatrix, type ErrorCorrectionLevel } from "./hooks/useQRMatrix";
 
 const DEFAULT_TEXT = "https://example.com";
-type Page = "home" | "about" | "docs";
+type Page = "home" | "about" | "docs" | "contact";
 
 const App = () => {
   const [text, setText] = useState(DEFAULT_TEXT);
@@ -32,6 +33,9 @@ const App = () => {
     }
     if (window.location.hash.startsWith("#docs")) {
       return "docs";
+    }
+    if (window.location.hash.startsWith("#contact")) {
+      return "contact";
     }
     return "home";
   });
@@ -83,6 +87,9 @@ const App = () => {
       }
       if (window.location.hash.startsWith("#docs")) {
         return "docs";
+      }
+      if (window.location.hash.startsWith("#contact")) {
+        return "contact";
       }
       return "home";
     };
@@ -172,6 +179,14 @@ const App = () => {
               aria-current={page === "docs" ? "page" : undefined}
             >
               文档
+            </button>
+            <button
+              type="button"
+              onClick={() => handleNavigate("contact")}
+              className={navButtonClass(page === "contact")}
+              aria-current={page === "contact" ? "page" : undefined}
+            >
+              联系我们
             </button>
           </nav>
 
@@ -287,8 +302,10 @@ const App = () => {
         </div>
       ) : page === "about" ? (
         <About />
-      ) : (
+      ) : page === "docs" ? (
         <Docs />
+      ) : (
+        <Contact />
       )}
     </div>
   );
