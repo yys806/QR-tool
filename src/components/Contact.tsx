@@ -3,7 +3,7 @@ const contactChannels = [
     title: "邮箱",
     value: "yaoshen806@qq.com",
     hint: "建议附上用途、尺寸与色彩偏好",
-    href: "yaoshen806@qq.com"
+    href: ""
   },
   {
     title: "微信",
