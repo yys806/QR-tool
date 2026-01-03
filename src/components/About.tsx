@@ -47,12 +47,12 @@ const About = () => {
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           {[
             {
-              name: "shen.chat 导航站",
-              url: "https://shen.chat"
+              name: "网站导航站",
+              url: "https://shen-navi.de5.net/"
             },
             {
-              name: "shen806.icu 作者个人介绍",
-              url: "https://shen806.icu"
+              name: "作者个人介绍",
+              url: "https://shen-intro.de5.net/"
             },
             {
               name: "shentv.dpdns.org 个人信息存储工具",
