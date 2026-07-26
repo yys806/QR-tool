@@ -118,7 +118,9 @@ const Docs = () => {
         return true;
       }
 
-      const haystack = [doc.title, doc.tags.join(" ")].join(" ").toLowerCase();
+      const haystack = [doc.title, doc.tags.join(" "), doc.body]
+        .join(" ")
+        .toLowerCase();
 
       return haystack.includes(keyword);
     });
@@ -209,7 +211,7 @@ const Docs = () => {
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="搜索标题 / 标签 / 正文"
-          className="h-10 w-full max-w-[260px] rounded-full border border-slate-200 bg-white/80 px-4 text-sm text-slate-700 shadow-inner focus:border-slate-400 focus:outline-none"
+          className="h-10 w-full max-w-[260px] rounded-full border border-slate-200 bg-white/80 px-4 text-sm text-slate-700 shadow-inner focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400/40"
         />
         <div className="flex items-center gap-2 text-sm text-slate-600">
           <span className="text-xs uppercase tracking-[0.2em] text-slate-500">
@@ -218,7 +220,7 @@ const Docs = () => {
           <select
             value={timeFilter}
             onChange={(event) => setTimeFilter(event.target.value as TimeFilter)}
-            className="h-10 rounded-full border border-slate-200 bg-white/80 px-3 text-sm shadow-inner focus:border-slate-400 focus:outline-none"
+            className="h-10 rounded-full border border-slate-200 bg-white/80 px-3 text-sm shadow-inner focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400/40"
           >
             <option value="all">全部</option>
             <option value="7d">近 7 天</option>

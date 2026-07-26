@@ -94,7 +94,7 @@ const Controls = ({
               rows={3}
               value={text}
               onChange={(event) => onTextChange(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white/80 p-3 text-sm shadow-inner focus:border-slate-400 focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-white/80 p-3 text-sm shadow-inner focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400/40"
               placeholder="https://example.com"
             />
           </label>
@@ -105,7 +105,7 @@ const Controls = ({
               type="text"
               value={titleText}
               onChange={(event) => onTitleTextChange(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white/80 p-3 text-sm shadow-inner focus:border-slate-400 focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-white/80 p-3 text-sm shadow-inner focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400/40"
               placeholder="可选：输入二维码标题"
             />
           </label>
@@ -117,7 +117,7 @@ const Controls = ({
               onChange={(event) =>
                 onErrorLevelChange(event.target.value as ErrorCorrectionLevel)
               }
-              className="w-full rounded-xl border border-slate-200 bg-white/80 p-2 text-sm shadow-inner focus:border-slate-400 focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-white/80 p-2 text-sm shadow-inner focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400/40"
             >
               <option value="L">L - 低</option>
               <option value="M">M - 中</option>
@@ -141,7 +141,7 @@ const Controls = ({
             <select
               value={dotStyle}
               onChange={(event) => onDotStyleChange(event.target.value as DotStyle)}
-              className="w-full rounded-xl border border-slate-200 bg-white/80 p-2 text-sm shadow-inner focus:border-slate-400 focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-white/80 p-2 text-sm shadow-inner focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400/40"
             >
               <option value="square">方块</option>
               <option value="dot">圆点</option>
@@ -192,7 +192,7 @@ const Controls = ({
               type="checkbox"
               checked={gradientEnabled}
               onChange={(event) => onGradientEnabledChange(event.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 text-slate-900"
+              className="h-4 w-4 rounded border-slate-300 accent-slate-900"
             />
           </label>
 
@@ -253,7 +253,7 @@ const Controls = ({
             <select
               value={eyeShape}
               onChange={(event) => onEyeShapeChange(event.target.value as EyeShape)}
-              className="w-full rounded-xl border border-slate-200 bg-white/80 p-2 text-sm shadow-inner focus:border-slate-400 focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-white/80 p-2 text-sm shadow-inner focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400/40"
             >
               <option value="square">方形</option>
               <option value="circle">圆形</option>

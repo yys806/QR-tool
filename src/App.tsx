@@ -145,7 +145,7 @@ const App = () => {
   };
 
   const navButtonClass = (active: boolean) =>
-    `rounded-full px-4 py-2 text-sm font-semibold transition ${
+    `rounded-full px-3 py-2 text-sm font-semibold transition sm:px-4 ${
       active
         ? "bg-slate-900 text-white shadow-lg shadow-slate-900/20"
         : "text-slate-700 hover:bg-white/80"
@@ -155,7 +155,10 @@ const App = () => {
     <div className="min-h-screen text-slate-900">
       <header className="mx-auto w-full max-w-full px-6 pt-6 lg:max-w-[75vw]">
         <div className="grid items-center gap-4 md:grid-cols-3">
-          <nav className="flex items-center gap-1 justify-self-start rounded-full border border-white/70 bg-white/70 p-1 text-sm shadow-sm">
+          <nav
+            aria-label="主导航"
+            className="flex items-center gap-1 justify-self-center rounded-full border border-white/70 bg-white/70 p-1 text-sm shadow-sm md:justify-self-start"
+          >
             <button
               type="button"
               onClick={() => handleNavigate("home")}

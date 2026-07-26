@@ -327,6 +327,8 @@ const QRCanvas = ({
   return (
     <canvas
       ref={canvasRef}
+      role="img"
+      aria-label="二维码预览"
       className="rounded-3xl border border-white/70 bg-white shadow-[0_25px_60px_rgba(15,23,42,0.15)]"
     />
   );
